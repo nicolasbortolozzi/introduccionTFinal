@@ -8,9 +8,26 @@ public:
 	Game();
 	void Play();
 	void Escribir();
+	void Dibujar();
 };
 
 Game::Game()
+{}
+
+void Game::Dibujar()
+{
+	int num = 1;
+	while(num <= 200)
+	{
+		cout << Tablero[num] << Tablero[num + 1] << Tablero[num + 2] << Tablero[num + 3] << Tablero[num + 4] << Tablero[num + 5];
+		cout << Tablero[num + 6] << Tablero[num + 7] << Tablero[num + 8] << Tablero[num + 9] << Tablero[num + 10];
+		cout << Tablero[num + 11] << Tablero[num + 12] << Tablero[num + 13] << Tablero[num + 14] << Tablero[num + 15];
+		cout << Tablero[num + 16] << Tablero[num + 17] << Tablero[num + 18] << Tablero[num + 19] << endl;
+		num = num + 20;
+	}
+}
+
+void Game::Escribir()
 {
 	int num = 1;
 	int lineaX = 1;
@@ -86,19 +103,6 @@ Game::Game()
 	}
 }
 
-void Game::Escribir()
-{
-	int num = 1;
-	while(num <= 200)
-	{
-		cout << Tablero[num] << Tablero[num + 1] << Tablero[num + 2] << Tablero[num + 3] << Tablero[num + 4] << Tablero[num + 5];
-		cout << Tablero[num + 6] << Tablero[num + 7] << Tablero[num + 8] << Tablero[num + 9] << Tablero[num + 10];
-		cout << Tablero[num + 11] << Tablero[num + 12] << Tablero[num + 13] << Tablero[num + 14] << Tablero[num + 15];
-		cout << Tablero[num + 16] << Tablero[num + 17] << Tablero[num + 18] << Tablero[num + 19] << endl;
-		num = num + 20;
-	}
-}
-
 void Game::Play()
 {
 	bool continuar = false;
@@ -106,36 +110,32 @@ void Game::Play()
 	{
 		cout << "Controles W,A,S,D     Puntaje:" << puntaje << endl << "====================================="  << endl;
 		Escribir();
+		Dibujar();
 		
 		continuar = true;
 	}
 }
 
-class Snake{
+class Snake:public Pared{
 	string direccion = "W";
 	string direccioncontraria = "S";
+	string Body = "N";
+	
 public:
+	int numpartes = 1;
 	Snake();
 };
 
 Snake::Snake()
 {}
 
-class espacios{
-	int lugar;
+
+class Pared{
 public:
-	espacios();
+	bool Avanzar = false;
+	Pared();
 };
-
-espacios::espacios()
-{}
-
-class PartesSnake{
-public:
-	PartesSnake();
-};
-
-PartesSnake::PartesSnake()
+Pared::Pared()
 {}
 
 
