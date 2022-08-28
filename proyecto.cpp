@@ -10,9 +10,32 @@ protected:
 pared::pared()
 {}
 
+class Snake : protected pared{
+public:
+	string direccion = "W";
+	string direccioncontraria = "S";
+	string Body = "N";
+	int numparte1X = 21;
+	int numparte1Y = 12;
+	int numparte2X = 21;
+	int numparte2Y = 13;
+	int numparte3X = 21;
+	int numparte3Y = 14;
+	int numparte4X = 21;
+	int numparte4Y = 15;
+	int numparte5X = 21;
+	int numparte5Y = 16;
+	Snake();
+};
+
+Snake::Snake()
+{}
+
 class Game{
 	int puntaje = 0;
+	bool TableroEspacios[801];
 	string Tablero[801];
+	Snake serpiente;
 public:
 	Game();
 	void Reset();
@@ -58,9 +81,42 @@ void Game::Escribir()
 	int lineaY = 1;
 	while(num != 801)
 	{
+		if(lineaY == serpiente.numparte1Y && lineaX == serpiente.numparte1X)
+		{
+			Tablero[num] = "N";
+			TableroEspacios[num] = false;
+			lineaX++;
+		}
+		
+		if(lineaY == serpiente.numparte2Y && lineaX == serpiente.numparte2X)
+		{
+			Tablero[num] = "N";
+			TableroEspacios[num] = false;
+			lineaX++;
+		}
+		if(lineaY == serpiente.numparte3Y && lineaX == serpiente.numparte3X)
+		{
+			Tablero[num] = "N";
+			TableroEspacios[num] = false;
+			lineaX++;
+		}
+		if(lineaY == serpiente.numparte4Y && lineaX == serpiente.numparte4X)
+		{
+			Tablero[num] = "N";
+			TableroEspacios[num] = false;
+			lineaX++;
+		}
+		if(lineaY == serpiente.numparte5Y && lineaX == serpiente.numparte5X)
+		{
+			Tablero[num] = "N";
+			TableroEspacios[num] = false;
+			lineaX++;
+		}
+		
 		if(lineaY == 1)
 		{
 			Tablero[num] = "X";
+			TableroEspacios[num] = false;
 			if(lineaX == 40)
 			{
 				lineaX = 1;
@@ -71,9 +127,11 @@ void Game::Escribir()
 				lineaX++;
 			}
 		}
+		
 		else if(lineaX == 1)
 		{
 			Tablero[num] = "X";
+			TableroEspacios[num] = false;
 			if(lineaX == 40)
 			{
 				lineaX = 1;
@@ -87,6 +145,7 @@ void Game::Escribir()
 		else if(lineaY == 20)
 		{
 			Tablero[num] = "X";
+			TableroEspacios[num] = false;
 			if(lineaX == 40)
 			{
 				lineaX = 1;
@@ -100,6 +159,7 @@ void Game::Escribir()
 		else if(lineaX == 40)
 		{
 			Tablero[num] = "X";
+			TableroEspacios[num] = false;
 			if(lineaX == 40)
 			{
 				lineaX = 1;
@@ -110,9 +170,10 @@ void Game::Escribir()
 				lineaX++;
 			}
 		}
-		else
+		else if(Tablero[num] != "N")
 		{
 			Tablero[num] = "O";
+			TableroEspacios[num] = true;
 			if(lineaX == 40)
 			{
 				lineaX = 1;
@@ -139,19 +200,6 @@ void Game::Play()
 		continuar = false;
 	}
 }
-
-class Snake : protected pared{
-public:
-	string direccion = "W";
-	string direccioncontraria = "S";
-	string Body = "N";
-	int numpartes = 1;
-	Snake();
-};
-
-Snake::Snake()
-{}
-
 
 int main(int argc, char *argv[]) {
 	Game juego;
