@@ -1,4 +1,6 @@
-#include <iostream>
+#include<cstdio>
+#include<iostream>
+#include<ctime>
 
 using namespace std;
 
@@ -15,6 +17,7 @@ public:
 	string direccion = "W";
 	string direccioncontraria = "S";
 	string Body = "N";
+	bool pierdes;
 	int numparte1X = 21;
 	int numparte1Y = 12;
 	int numparte2X = 21;
@@ -33,6 +36,7 @@ Snake::Snake()
 
 class Game{
 	int puntaje = 0;
+	bool continuar = true;
 	bool TableroEspacios[801];
 	string Tablero[801];
 	Snake serpiente;
@@ -42,6 +46,7 @@ public:
 	void Play();
 	void Escribir();
 	void Dibujar();
+	void Move();
 };
 
 Game::Game()
@@ -54,6 +59,28 @@ void Game::Reset()
 	{
 		Tablero[num] = "";
 		num++;
+	}
+}
+
+void Game::Move()
+{
+	int espacioXY = serpiente.numparte1X * serpiente.numparte1Y;
+	int nextespacioXY;
+	int Y;
+	if(serpiente.direccion == "W")
+	{
+		Y = serpiente.numparte1Y - 1;
+		nextespacioXY = serpiente.numparte1X * Y;
+		if(TableroEspacios[nextespacioXY] == true)
+		{
+			continuar = true;
+		}
+		else
+		{
+			continuar = false;
+			TableroEspacios[espacioXY] = true;
+			serpiente.numparte1Y = Y;
+		}
 	}
 }
 
@@ -190,14 +217,18 @@ void Game::Escribir()
 
 void Game::Play()
 {
-	bool continuar = true;
+	int Timer = 1;
 	while(continuar == true)
 	{
-		cout << "Controles: W,A,S,D      Puntaje: " << puntaje << endl << "========================================"  << endl;
+		cout << "========================================"  << endl << "Controles: W,A,S,D      Puntaje: " << puntaje << endl << "========================================"  << endl;
 		Escribir();
 		Dibujar();
+		Move();
 		
-		continuar = false;
+		Timer *= CLOCKS_PER_SEC;
+		clock_t now = clock();
+		while(clock() - now <Timer);
+		Timer = 1;
 	}
 }
 
