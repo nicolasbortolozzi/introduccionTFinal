@@ -67,19 +67,38 @@ void Game::Move()
 	int espacioXY = serpiente.numparte1X * serpiente.numparte1Y;
 	int nextespacioXY;
 	int Y;
+	int X;
 	if(serpiente.direccion == "W")
 	{
 		Y = serpiente.numparte1Y - 1;
+		X = serpiente.numparte1X;
 		nextespacioXY = serpiente.numparte1X * Y;
 		if(TableroEspacios[nextespacioXY] == true)
 		{
 			continuar = true;
+			int tempnumparte1X = serpiente.numparte1X;
+			int tempnumparte1Y = serpiente.numparte1Y;
+			int tempnumparte2X = serpiente.numparte2X;
+			int tempnumparte2Y = serpiente.numparte2Y;
+			int tempnumparte3X = serpiente.numparte3X;
+			int tempnumparte3Y = serpiente.numparte3Y;
+			int tempnumparte4X = serpiente.numparte4X;
+			int tempnumparte4Y = serpiente.numparte4Y;
+			
+			serpiente.numparte1Y = Y;
+			serpiente.numparte1X = X;
+			serpiente.numparte2Y = tempnumparte1Y;
+			serpiente.numparte2X = tempnumparte1X;
+			serpiente.numparte3Y = tempnumparte2Y;
+			serpiente.numparte3X = tempnumparte2X;
+			serpiente.numparte4Y = tempnumparte3Y;
+			serpiente.numparte4X = tempnumparte3X;
+			serpiente.numparte5Y = tempnumparte4Y;
+			serpiente.numparte5X = tempnumparte4X;
 		}
 		else
 		{
 			continuar = false;
-			TableroEspacios[espacioXY] = true;
-			serpiente.numparte1Y = Y;
 		}
 	}
 }
@@ -224,6 +243,7 @@ void Game::Play()
 		Escribir();
 		Dibujar();
 		Move();
+		Reset();
 		
 		Timer *= CLOCKS_PER_SEC;
 		clock_t now = clock();
