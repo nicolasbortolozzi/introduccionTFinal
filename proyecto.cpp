@@ -2,6 +2,11 @@
 #include<iostream>
 #include<ctime>
 
+#define WWW 87
+#define DDD 68
+#define AAA 65
+#define SSS 83
+
 using namespace std;
 
 class pared{
@@ -14,7 +19,7 @@ pared::pared()
 
 class Snake : protected pared{
 public:
-	string direccion = "W";
+	string direccion = "W"; //Hay un Bug que no pude solucionar con la A
 	string direccioncontraria = "S";
 	string Body = "N";
 	bool pierdes;
@@ -29,9 +34,13 @@ public:
 	int numparte5X = 21;
 	int numparte5Y = 16;
 	Snake();
+	void MoveInput();
 };
 
 Snake::Snake()
+{}
+
+void Snake::MoveInput()
 {}
 
 class Game{
@@ -40,6 +49,9 @@ class Game{
 	bool TableroEspacios[801];
 	string Tablero[801];
 	Snake serpiente;
+	int A = 3;
+	int Y;
+	int X;
 public:
 	Game();
 	void Reset();
@@ -64,10 +76,18 @@ void Game::Reset()
 
 void Game::Move()
 {
-	int espacioXY = serpiente.numparte1X * serpiente.numparte1Y;
+	int espacioXY = serpiente.numparte1Y * serpiente.numparte1X;
 	int nextespacioXY;
-	int Y;
-	int X;
+	
+	int tempnumparte1X = serpiente.numparte1X;
+	int tempnumparte1Y = serpiente.numparte1Y;
+	int tempnumparte2X = serpiente.numparte2X;
+	int tempnumparte2Y = serpiente.numparte2Y;
+	int tempnumparte3X = serpiente.numparte3X;
+	int tempnumparte3Y = serpiente.numparte3Y;
+	int tempnumparte4X = serpiente.numparte4X;
+	int tempnumparte4Y = serpiente.numparte4Y;
+	
 	if(serpiente.direccion == "W")
 	{
 		Y = serpiente.numparte1Y - 1;
@@ -76,15 +96,87 @@ void Game::Move()
 		if(TableroEspacios[nextespacioXY] == true)
 		{
 			continuar = true;
-			int tempnumparte1X = serpiente.numparte1X;
-			int tempnumparte1Y = serpiente.numparte1Y;
-			int tempnumparte2X = serpiente.numparte2X;
-			int tempnumparte2Y = serpiente.numparte2Y;
-			int tempnumparte3X = serpiente.numparte3X;
-			int tempnumparte3Y = serpiente.numparte3Y;
-			int tempnumparte4X = serpiente.numparte4X;
-			int tempnumparte4Y = serpiente.numparte4Y;
 			
+			TableroEspacios[espacioXY] = true;
+			serpiente.numparte1Y = Y;
+			serpiente.numparte1X = X;
+			serpiente.numparte2Y = tempnumparte1Y;
+			serpiente.numparte2X = tempnumparte1X;
+			serpiente.numparte3Y = tempnumparte2Y;
+			serpiente.numparte3X = tempnumparte2X;
+			serpiente.numparte4Y = tempnumparte3Y;
+			serpiente.numparte4X = tempnumparte3X;
+			serpiente.numparte5Y = tempnumparte4Y;
+			serpiente.numparte5X = tempnumparte4X;
+		}
+		else
+		{
+			continuar = false;
+		}
+	}
+	if(serpiente.direccion == "A")
+	{
+		Y = serpiente.numparte1Y;
+		X = serpiente.numparte1X - A;
+		A = 1;
+		nextespacioXY = serpiente.numparte1Y * X;
+		if(TableroEspacios[nextespacioXY] == true)
+		{
+			continuar = true;
+			
+			TableroEspacios[espacioXY] = true;
+			serpiente.numparte1Y = Y;
+			serpiente.numparte1X = X;
+			serpiente.numparte2Y = tempnumparte1Y;
+			serpiente.numparte2X = tempnumparte1X;
+			serpiente.numparte3Y = tempnumparte2Y;
+			serpiente.numparte3X = tempnumparte2X;
+			serpiente.numparte4Y = tempnumparte3Y;
+			serpiente.numparte4X = tempnumparte3X;
+			serpiente.numparte5Y = tempnumparte4Y;
+			serpiente.numparte5X = tempnumparte4X;
+		}
+		else
+		{
+			continuar = false;
+		}
+	}
+	if(serpiente.direccion == "D")
+	{
+		Y = serpiente.numparte1Y;
+		X = serpiente.numparte1X + 1;
+		nextespacioXY = serpiente.numparte1X * Y;
+		if(TableroEspacios[nextespacioXY] == true)
+		{
+			continuar = true;
+			
+			TableroEspacios[espacioXY] = true;
+			serpiente.numparte1Y = Y;
+			serpiente.numparte1X = X;
+			serpiente.numparte2Y = tempnumparte1Y;
+			serpiente.numparte2X = tempnumparte1X;
+			serpiente.numparte3Y = tempnumparte2Y;
+			serpiente.numparte3X = tempnumparte2X;
+			serpiente.numparte4Y = tempnumparte3Y;
+			serpiente.numparte4X = tempnumparte3X;
+			serpiente.numparte5Y = tempnumparte4Y;
+			serpiente.numparte5X = tempnumparte4X;
+		}
+		else
+		{
+			continuar = false;
+		}
+	}
+	if(serpiente.direccion == "S")
+	{
+		Y = serpiente.numparte1Y;
+		X = serpiente.numparte1X + 1;
+		nextespacioXY = serpiente.numparte1X * Y;
+		if(TableroEspacios[nextespacioXY] == true)
+		{
+			continuar = true;
+			
+			TableroEspacios[espacioXY] = true;
 			serpiente.numparte1Y = Y;
 			serpiente.numparte1X = X;
 			serpiente.numparte2Y = tempnumparte1Y;
@@ -122,7 +214,7 @@ void Game::Dibujar()
 
 void Game::Escribir()
 {
-	int num = 1;
+	int num = 0;
 	int lineaX = 1;
 	int lineaY = 1;
 	while(num != 801)
@@ -177,7 +269,7 @@ void Game::Escribir()
 		else if(lineaX == 1)
 		{
 			Tablero[num] = "X";
-			TableroEspacios[num] = false;
+			TableroEspacios[num + 1] = false;
 			if(lineaX == 40)
 			{
 				lineaX = 1;
@@ -248,11 +340,36 @@ void Game::Play()
 		Timer *= CLOCKS_PER_SEC;
 		clock_t now = clock();
 		while(clock() - now <Timer);
+//		{
+//			char input;
+//			cin >> input;
+//			if (input == WWW && serpiente.direccioncontraria != "S")
+//			{
+//				serpiente.direccion = "W";
+//				serpiente.direccioncontraria = "S";
+//			}
+//			if (input == SSS && serpiente.direccioncontraria != "W")
+//			{
+//				serpiente.direccion = "S";
+//				serpiente.direccioncontraria = "W";
+//			}
+//			if (input == AAA && serpiente.direccioncontraria != "A")
+//			{
+//				serpiente.direccion = "A";
+//				serpiente.direccioncontraria = "D";
+//			}
+//			if (input == DDD && serpiente.direccioncontraria != "D")
+//			{
+//				serpiente.direccion = "D";
+//				serpiente.direccioncontraria = "A";
+//			}
+//		}
 		Timer = 1;
 	}
 }
 
 int main(int argc, char *argv[]) {
+	
 	Game juego;
 	juego.Reset();
 	juego.Play();
